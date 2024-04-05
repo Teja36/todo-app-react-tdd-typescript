@@ -19,13 +19,26 @@ function App() {
     ]);
   };
 
+  const onUpdateTask = (id: number, updatedTask: Task) => {
+    setTasks([...tasks.map((task) => (task.id === id ? updatedTask : task))]);
+  };
+
+  const onDeleteTask = (id: number) => {
+    setTasks([...tasks.filter((task) => task.id !== id)]);
+  };
+
   return (
     <div>
       <h1>Tasks</h1>
       <AddTask onAddTask={onAddTask} />
       <TaskList header={<TaskListHeader count={tasks.length} />}>
         {tasks.map((task) => (
-          <TaskListItem key={task.id}>{task.title}</TaskListItem>
+          <TaskListItem
+            key={task.id}
+            task={task}
+            onUpdateTask={onUpdateTask}
+            onDeleteTask={onDeleteTask}
+          />
         ))}
       </TaskList>
     </div>
